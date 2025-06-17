@@ -56,3 +56,6 @@ def health():
         "model_loaded": model is not None,
         "tokenizer_loaded": tokenizer is not None
     })
+if __name__ == "__main__":
+    # Only used for local development. Render uses gunicorn instead.
+    app.run(host="0.0.0.0", port=5000, debug=True)
