@@ -35,24 +35,22 @@ def sentiment_analysis(text):
 
 # Main route: Form to enter text
 @app.route("/", methods=["GET", "POST"])
+@app.route("/", methods=["GET", "POST"])
 def index():
-    global model, tokenizer
+    try:
+        sentiment = None
+        text = ""
+        if request.method == "POST":
+            text = request.form.get("text", "")
+            print("Received text:", text)
+            vader_result = analyzer.polarity_scores(text)
+            vader_result["custom model positive"] = sentiment_analysis(text)
+            sentiment = vader_result
+        return render_template("form.html", sentiment=sentiment, text=text)
+    except Exception as e:
+        print("❌ Exception in / route:", e)
+        return "An error occurred while processing the request."
 
-    # Lazy-load model and tokenizer
-    if model is None:
-        load_keras_model()
-    if tokenizer is None:
-        load_tokenizer()
-
-    sentiment = None
-    text = ""
-    if request.method == "POST":
-        text = request.form.get("text", "")
-        vader_result = analyzer.polarity_scores(text)
-        vader_result["custom model positive"] = sentiment_analysis(text)
-        sentiment = vader_result
-
-    return render_template("form.html", sentiment=sentiment, text=text)
 
 # Health check endpoint for debugging
 @app.route("/health")
