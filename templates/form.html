@@ -1,12 +1,40 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>Sentiment Analysis</title>
-    </head>
-    <body>
-        <form method="POST">
-            <textarea name="user_text" rows="5"></textarea>
-            <input type="submit" value="Analyze Text">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sentiment Analyzer - Thinkbot AI</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center title">🔍 Sentiment Analyzer</h1>
+        <p class="text-center subtitle">Analyze your text using VADER and a custom AI model</p>
+        
+        <form method="POST" id="sentiment-form">
+            <div class="form-group">
+                <textarea class="form-control" name="text" rows="4" placeholder="Type your thoughts here...">{{ text }}</textarea>
+            </div>
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">Analyze</button>
+                <button type="button" id="clear-btn" class="btn btn-secondary ml-2">Clear</button>
+            </div>
         </form>
-    </body>
+
+        {% if sentiment %}
+        <div class="result-box mt-4 p-4">
+            <h4>Results for: <span class="analyzed-text">"{{ text }}"</span></h4>
+            <ul class="list-group mt-3">
+                <li class="list-group-item">📊 VADER Compound Score: <strong>{{ sentiment.compound }}</strong></li>
+                <li class="list-group-item">😊 Positive: {{ sentiment.pos }}</li>
+                <li class="list-group-item">😐 Neutral: {{ sentiment.neu }}</li>
+                <li class="list-group-item">😞 Negative: {{ sentiment.neg }}</li>
+                <li class="list-group-item">🧠 Custom AI Positivity Score: <strong>{{ sentiment["custom model positive"] }}</strong></li>
+            </ul>
+        </div>
+        {% endif %}
+    </div>
+
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
+</body>
 </html>
