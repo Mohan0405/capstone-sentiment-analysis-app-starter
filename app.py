@@ -62,6 +62,6 @@ def health():
         "tokenizer_loaded": tokenizer is not None
     })
 
-if __name__ == "__main__":
-      Local development only. Use gunicorn for Render.
-      app.run(host="0.0.0.0", port=5000, debug=True)
+#if __name__ == "__main__":
+ #     Local development only. Use gunicorn for Render.
+  #    app.run(host="0.0.0.0", port=5000, debug=True)
