@@ -35,8 +35,6 @@ def sentiment_analysis(text):
 
 # Main route: Form to enter text
 @app.route("/", methods=["GET", "POST"])
-@app.route("/", methods=["GET", "POST"])
-@app.route("/", methods=["GET", "POST"])
 def index():
     sentiment = None
     text = ""
